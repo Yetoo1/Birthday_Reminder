@@ -117,7 +117,7 @@ case $filetype1 in
 				echo "Wrote $VIDEOPL to $CONFIGP as the video player" 
 			fi		 	
 			read -p "Enter the path to your video: " $VIDEOP </dev/tty
-			echo "$VIDEOP" >> "$CONFIGP"
+			echo "${!VIDEOP}" >> "$CONFIGP"#this line only works
 			echo "Wrote $VIDEOP to $CONFIGP" 			
 			read -p "Do wish to have the video open in a window or in another instance? window/instance " $VIDEOO </dev/tty #clarify what the fuck 'in a winodw or in another instance means' 
 			echo "$VIDEOO" >> "$CONFIGP"			
