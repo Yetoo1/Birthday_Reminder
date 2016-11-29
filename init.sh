@@ -114,18 +114,19 @@ case $filetype1 in
 				echo "$DEFAULTPL" >> "$CONFIGP"
 				echo "Wrote the default video player, $DEFAULTVPL, to $CONFIGP as the video player."
 			else
-				echo "Wrote $VIDEOPL to $CONFIGP as the video player" 
+				echo "Wrote ${!VIDEOPL} to $CONFIGP as the video player" 
 			fi		 	
 			read -p "Enter the path to your video: " $VIDEOP </dev/tty
 			echo "${!VIDEOP}" >> "$CONFIGP"#this line only works
-			echo "Wrote $VIDEOP to $CONFIGP" 			
+			echo "Wrote ${!VIDEOP} to $CONFIGP" 			
 			read -p "Do wish to have the video open in a window or in another instance? window/instance " $VIDEOO </dev/tty #clarify what the fuck 'in a winodw or in another instance means' 
-			echo "$VIDEOO" >> "$CONFIGP"			
-			echo "Wrote $VIDEOO to $CONFIGP as the method of opening $VIDEOPL" #don't get confused here, $VIDEOPL is entered first, DEFAULTPL is already set, it doesn't matter, the change stays
+			echo "${!VIDEOO}" >> "$CONFIGP"			
+			echo "Wrote ${!VIDEOO} to $CONFIGP as the method of opening $VIDEOPL" #don't get confused here, $VIDEOPL is entered first, DEFAULTPL is already set, it doesn't matter, the change stays
 			read -p "Do you wish to choose another video or choose another type of media/text? video/media-text " $videoc </dev/tty  		 	
-			if [[ $videoc == "media-text" ]]; then
+			if [[ ${!videoc} == "media-text" ]]; then
 				break
-			elif [[ $videoc == "video" ]]; then :			
+			elif [[ ${!videoc} == "video" ]]; then :			
+				:
 			fi			
 			c=$((c+1))
 		 done 
