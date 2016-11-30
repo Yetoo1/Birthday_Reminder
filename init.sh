@@ -136,13 +136,21 @@ case $filetype1 in
 		 done 
 		 ;;
 	"music") echo "This package ships with mpv <insert version> so by default, if you don't type in the command for a music player, the script will use mpv to play your music."
-		 c2=1
+		 #c2=1
 		 while :
 		 do
 			#add ability to add switches and options and shit
 			#DEFAULTM
+			DEFAULTMPL="mpv"
 			echo "--------------MUSIC_${c}--------------" >> "$CONFIGP"		 
-			
+			read -p "Enter your music player of choice: " MUSICPL </dev/tty
+		        if [[ "$MUSICPL" == "" ]]; then
+				echo "$DEFAULTMPL" >> "$CONFIGP"
+				echo "Wrote the default music player, $DEFAULTMPL, to $CONFIGP as the music player."
+			else
+				echo "$MUSICPL" >> "$CONFIGP"
+				echo "Wrote $MUSICPL to $CONFIGP as the music player"
+			fi			
 			echo "--------------MUSIC_${c}_END--------------" >> "$CONFIGP"	
 			#c2=$((c2+1))
 			break
