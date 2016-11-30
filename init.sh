@@ -93,51 +93,57 @@ echo -e "Wrote $line2 to $CONFIGP\n"
 #this next section allows the user to choose the personalization of their file
 echo "This next part of the initialization will ask which media files and pieces of text will be displayed."
 #the config format will change I assure you thing who dared to venture into this pile of shit
+#c=1 //testincrement of video
 while :
 do
 read -p "If you wish to exit the init script now type exit. What file type do you want to input? video/music/text " filetype1 </dev/tty
 case $filetype1 in
+	#c=1 failed test, original position as opposed to the one above
 	"video") echo "This package ships with mpv <insert version> so by default, if you don't type in the command for a video player, the script will use mpv to play your video."
-		 c=1
 		 while :
 		 do
 			#add ability to add switches and options and shit
-			#fix the incremental variable names, currently they do not work in terms of the variable names incrementing	
+			#fuck you don't need the incrementing variable names, it just repeats every iteration, it goes to the same place. Maybe all you need incrementing is the Video number at the top, the program reading the file will just opena new window or instance when it reads it
 			DEFAULTVPL="mpv" #the default video player is mpv
-			VIDEOPL="VIDEOPL$c" #video player
-		 	VIDEOP="VIDEOP$c" #video path
-			VIDEOO="VIDEOO$c" #video open
-			videoc="videoc$c" #final choice for video
-			echo "--------------VIDEO_$c--------------" >> "$CONFIGP" 			
-			read -p "Enter your video player of choice: " $VIDEOPL </dev/tty
+			#VIDEOPL ="VIDEOPL$c" #video player
+		 	#VIDEOP ="VIDEOP$c" #video path
+			#VIDEOO ="VIDEOO$c" #video open
+			#videoc ="videoc$c" #final choice for video
+			echo "--------------VIDEO--------------" >> "$CONFIGP"
+			read -p "Enter your video player of choice: " VIDEOPL </dev/tty
 			if [[ "$VIDEOPL" == "" ]]; then
-				echo "$DEFAULTPL" >> "$CONFIGP"
+				echo "$DEFAULTVPL" >> "$CONFIGP"
 				echo "Wrote the default video player, $DEFAULTVPL, to $CONFIGP as the video player."
+				
 			else
-				echo "Wrote ${!VIDEOPL} to $CONFIGP as the video player" 
+				echo "$VIDEOPL" >> "$CONFIGP"			
+				echo "Wrote $VIDEOPL to $CONFIGP as the video player" 
 			fi		 	
-			read -p "Enter the path to your video: " $VIDEOP </dev/tty
-			echo "${!VIDEOP}" >> "$CONFIGP"#this line only works
-			echo "Wrote ${!VIDEOP} to $CONFIGP" 			
-			read -p "Do wish to have the video open in a window or in another instance? window/instance " $VIDEOO </dev/tty #clarify what the fuck 'in a winodw or in another instance means' 
-			echo "${!VIDEOO}" >> "$CONFIGP"			
-			echo "Wrote ${!VIDEOO} to $CONFIGP as the method of opening $VIDEOPL" #don't get confused here, $VIDEOPL is entered first, DEFAULTPL is already set, it doesn't matter, the change stays
-			read -p "Do you wish to choose another video or choose another type of media/text? video/media-text " $videoc </dev/tty  		 	
-			if [[ ${!videoc} == "media-text" ]]; then
+			read -p "Enter the path to your video: " VIDEOP </dev/tty
+			echo "$VIDEOP" >> "$CONFIGP"
+			echo "Wrote $VIDEOP to $CONFIGP" 			
+			read -p "Do wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodw or in another instance means' 
+			echo "$VIDEOO" >> "$CONFIGP"			
+			echo "Wrote $VIDEOO to $CONFIGP as the method of opening $VIDEOPL" #don't get confused here, $VIDEOPL is entered first, DEFAULTPL is already set, it doesn't matter, the change stays 			
+			read -p "Do you wish to choose another video or choose another type of media/text? video/media-text " videoc </dev/tty  		 	
+			echo "--------------VIDEO_END--------------"	>> "$CONFIGP"			
+			if [[ "$videoc" == "media-text" ]]; then			
 				break
-			elif [[ ${!videoc} == "video" ]]; then :			
+			elif [[ "$videoc" == "video" ]]; then			
 				:
 			fi			
-			c=$((c+1))
+			#c=$((c+1))
 		 done 
 		 ;;
 	"music") echo "This package ships with mpv <insert version> so by default, if you don't type in the command for a music player, the script will use mpv to play your music."
 		 c2=1
 		 while :
 		 do
-			echo "--------------MUSIC_$c--------------" >> "$CONFIGP"		 	
 			#add ability to add switches and options and shit
 			#DEFAULTM
+			echo "--------------MUSIC_${c}--------------" >> "$CONFIGP"		 
+			
+			echo "--------------MUSIC_${c}_END--------------" >> "$CONFIGP"	
 			#c2=$((c2+1))
 			break
 		 done
