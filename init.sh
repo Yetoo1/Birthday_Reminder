@@ -94,6 +94,7 @@ echo -e "Wrote $line2 to $CONFIGP\n"
 echo "This next part of the initialization will ask which media files and pieces of text will be displayed."
 #the config format will change I assure you thing who dared to venture into this pile of shit
 #c=1 //testincrement of video
+#add ability to change previous entries
 while :
 do
 read -p "If you wish to exit the init script now type exit. What file type do you want to input? video/music/text " filetype1 </dev/tty
@@ -109,6 +110,7 @@ case $filetype1 in
 		 	#VIDEOP ="VIDEOP$c" #video path
 			#VIDEOO ="VIDEOO$c" #video open
 			#videoc ="videoc$c" #final choice for video
+			#${!var} this allowed the incrementing incase any one of you, future mes want to get fancy, if you want to equal it to something or some shit, put it in double quotes, I think
 			echo "--------------VIDEO--------------" >> "$CONFIGP"
 			read -p "Enter your video player of choice: " VIDEOPL </dev/tty
 			if [[ "$VIDEOPL" == "" ]]; then
@@ -122,7 +124,7 @@ case $filetype1 in
 			read -p "Enter the path to your video: " VIDEOP </dev/tty
 			echo "$VIDEOP" >> "$CONFIGP"
 			echo "Wrote $VIDEOP to $CONFIGP" 			
-			read -p "Do wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodw or in another instance means' 
+			read -p "Do you wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodow or in another instance means' 
 			echo "$VIDEOO" >> "$CONFIGP"			
 			echo "Wrote $VIDEOO to $CONFIGP as the method of opening $VIDEOPL" #don't get confused here, $VIDEOPL is entered first, DEFAULTPL is already set, it doesn't matter, the change stays 			
 			read -p "Do you wish to choose another video or choose another type of media/text? video/media-text " videoc </dev/tty  		 	
@@ -142,27 +144,50 @@ case $filetype1 in
 			#add ability to add switches and options and shit
 			#DEFAULTM
 			DEFAULTMPL="mpv"
-			echo "--------------MUSIC_${c}--------------" >> "$CONFIGP"		 
+			echo "--------------MUSIC--------------" >> "$CONFIGP"		 
 			read -p "Enter your music player of choice: " MUSICPL </dev/tty
 		        if [[ "$MUSICPL" == "" ]]; then
 				echo "$DEFAULTMPL" >> "$CONFIGP"
 				echo "Wrote the default music player, $DEFAULTMPL, to $CONFIGP as the music player."
 			else
 				echo "$MUSICPL" >> "$CONFIGP"
-				echo "Wrote $MUSICPL to $CONFIGP as the music player"
+				echo "Wrote $MUSICPL to $CONFIGP as the music player."
 			fi			
+			read -p "Enter the path to your music: " MUSICP </dev/tty
+			echo "$MUSICP" >> "$CONFIGP"
+			echo "Wrote $MUSICP to $CONFIGP"
+			read -p "Do you wish to have the music open in a window or in another instance? window/instance " MUSICO </dev/tty
+			echo "$MUSICO" >> "$CONFIGP"
+			echo "Wrote $MUSICO to $CONFIGP as the method of opening $MUSICPL"
+			read -p "Do you wish to choose another music or choose another type of media/text? music/media-text" musicc </dev/tty
 			echo "--------------MUSIC_${c}_END--------------" >> "$CONFIGP"	
+			if [[ "$musicc" == "media-text" ]]; then
+				break
+			elif [[ "$musicc" == "music" ]]; then
+				:
+			fi			
 			#c2=$((c2+1))
-			break
+			#https://www.cyberciti.biz/faq/linux-unix-shell-programming-converting-lowercase-uppercase/
 		 done
 		 ;;
 	"text") echo "This will open a new instance of the terminal and cat the lines that you wish to input into the config. Of course you can change how to read the text but the default will be cat." 
-		c3=1
+		#c3=1
 		while :
 		do
-			echo "--------------TEXT_$c--------------" >> "$CONFIGP"
+			DEFAULTTEXTV="cat"
+			echo "--------------TEXT--------------" >> "$CONFIGP"
 			#add ability to add switches and options and shit			
 			#DEFAULTT
+			#add ability to open a specific terminal application			
+			read -p "Enter your text view/manipulator of choice: " TEXTV </dev/tyy
+			if [[ "$TEXTV" == "" ]]; then
+				echo "$DEFAULTTEXTV" >> "$CONIFGP"			
+				echo "Wrote the default text viewer, $DEFAULTTEXTV, to $CONFIGP as the text viewer."
+			else
+				echo "$TEXTV" >> "$CONFIGP"
+				echo "Wrote $TEXTV to $CONFIGP as the text viewer/manipulator."
+			fi
+			#add the other shit			
 			#c3=$((c3+1))	
 			break		
 		done
