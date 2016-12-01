@@ -97,7 +97,12 @@ echo "This next part of the initialization will ask which media files and pieces
 #add ability to change previous entries
 #make all the long read stuff into variables so that a case statement for the different variables of each section so it can easily choose without clutter down here but remember the significance of the lines that can't be redundant
 #do test to verify that variables can be used with read without any change other than the usuall dollar sign
-
+#variables to make things more comfy, really need to move to top if the case is going to be advanced
+#this is where the variables for below start 
+OOC="Enter your <insert variable> of choice: " #object thing of choice
+POO="Enter the path to your <insert variable>: " #path of object
+WOI="Do you wish to have the <insert variable> open in a window or in another instance? window/instance " #window orinstance
+AIO="" #After iteration option
 while :
 do
 read -p "If you wish to exit the init script now type exit. What file type do you want to input? video/music/text " filetype1 </dev/tty
@@ -106,10 +111,6 @@ case $filetype1 in
 	"video") echo "This package ships with mpv <insert version> so by default, if you don't type in the command for a video player, the script will use mpv to play your video."
 		 while :
 		 do
-			#variables to make things more comy, really need to move to top if the case is going to be advanced
-			POC="Enter your video player of choice: " #player of choice
-			POV="Enter the path to your video: " #path of video
-			WOI="Do you wish to have the video open in a window or in another instance? window/instance " #window orinstance
 			#add ability to add switches and options and shit
 			#fuck you don't need the incrementing variable names, it just repeats every iteration, it goes to the same place. Maybe all you need incrementing is the Video number at the top, the program reading the file will just opena new window or instance when it reads it. Essentially it parses one section at a time. Slow, but I don't want to add the incrementing titles right now.
 			DEFAULTVPL="mpv" #the default video player is mpv
