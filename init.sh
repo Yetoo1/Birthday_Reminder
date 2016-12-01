@@ -95,6 +95,7 @@ echo "This next part of the initialization will ask which media files and pieces
 #the config format will change I assure you thing who dared to venture into this pile of shit
 #c=1 //testincrement of video
 #add ability to change previous entries
+#make all the long read stuff into variables so that a case statement for the different variables of each section so it can easily choose without clutter down here but remember the significance of the lines that can't be redundant
 while :
 do
 read -p "If you wish to exit the init script now type exit. What file type do you want to input? video/music/text " filetype1 </dev/tty
@@ -104,7 +105,7 @@ case $filetype1 in
 		 while :
 		 do
 			#add ability to add switches and options and shit
-			#fuck you don't need the incrementing variable names, it just repeats every iteration, it goes to the same place. Maybe all you need incrementing is the Video number at the top, the program reading the file will just opena new window or instance when it reads it
+			#fuck you don't need the incrementing variable names, it just repeats every iteration, it goes to the same place. Maybe all you need incrementing is the Video number at the top, the program reading the file will just opena new window or instance when it reads it. Essentially it parses one section at a time. Slow, but I don't want to add the incrementing titles right now.
 			DEFAULTVPL="mpv" #the default video player is mpv
 			#VIDEOPL ="VIDEOPL$c" #video player
 		 	#VIDEOP ="VIDEOP$c" #video path
@@ -159,8 +160,8 @@ case $filetype1 in
 			read -p "Do you wish to have the music open in a window or in another instance? window/instance " MUSICO </dev/tty
 			echo "$MUSICO" >> "$CONFIGP"
 			echo "Wrote $MUSICO to $CONFIGP as the method of opening $MUSICPL"
-			read -p "Do you wish to choose another music or choose another type of media/text? music/media-text" musicc </dev/tty
-			echo "--------------MUSIC_${c}_END--------------" >> "$CONFIGP"	
+			read -p "Do you wish to choose another music or choose another type of media/text? music/media-text " musicc </dev/tty
+			echo "--------------MUSIC_END--------------" >> "$CONFIGP"	
 			if [[ "$musicc" == "media-text" ]]; then
 				break
 			elif [[ "$musicc" == "music" ]]; then
@@ -171,9 +172,10 @@ case $filetype1 in
 		 done
 		 ;;
 	"text") echo "This will open a new instance of the terminal and cat the lines that you wish to input into the config. Of course you can change how to read the text but the default will be cat." 
-		#c3=1
+		#c3=1		
 		while :
 		do
+			#TEXTV is textviewer
 			DEFAULTTEXTV="cat"
 			echo "--------------TEXT--------------" >> "$CONFIGP"
 			#add ability to add switches and options and shit			
@@ -181,15 +183,28 @@ case $filetype1 in
 			#add ability to open a specific terminal application			
 			read -p "Enter your text view/manipulator of choice: " TEXTV </dev/tyy
 			if [[ "$TEXTV" == "" ]]; then
+				#$TEXTV=$DEFAULTTEXTV
 				echo "$DEFAULTTEXTV" >> "$CONIFGP"			
 				echo "Wrote the default text viewer, $DEFAULTTEXTV, to $CONFIGP as the text viewer."
 			else
 				echo "$TEXTV" >> "$CONFIGP"
 				echo "Wrote $TEXTV to $CONFIGP as the text viewer/manipulator."
 			fi
+			read -p "Enter the path to your textfile: " TEXTP </dev/tty
+			echo "$TEXTP" >> "$CONFIGP"
+			echo "Wrote $TEXTP to $CONFIGP"
+			read -p "Do you wish to have the text open in a window or in another instance? window/instance " TEXTO </dev/tty
+			echo "$TEXTO" >> "$CONFIGP"
+			echo "Wrote $TEXTO to $CONFIGP as the method of opening $TEXTV"			
+			read -p "Do you wish to choose another text viewer or manipulator; or choose another type of of media/text? text/media-text " textc </dev/tty
+			echo "--------------TEXT_END--------------" >> "$CONFIGP"
+			if [[ "$textc" == "media-text" ]]; then
+				break
+			elif [[ "$textc" == "text" ]]; then
+				:
+			fi
 			#add the other shit			
 			#c3=$((c3+1))	
-			break		
 		done
 		;;
 	"exit") echo "Exiting the init script..." #add some verification or some shit to make this line more powerful and worth not just putting 'Exiting...'
