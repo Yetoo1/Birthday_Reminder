@@ -6,13 +6,15 @@
 #Also, the idea behind this script is that it helps the user have a guidline on what to input into the config. After the init is done, it is encouraged to manually edit the file with all their will, joy, and effort.
 #change all the y/n cases to if statements 
 #in the event of the requirement of the calling of terminal, make a function or some shit that checks what terminal the user uses. If in the event that there is a different terminal than the ones supported, this script has got to say something
-#also speaking of functions, make some functions and shit to clean this thing up 
+#also speaking of functions, make some functions and shit to clean this thing up
+#also make huge as fuck case statement that allows the user to see all the settings more clearly. This isn't a game. Make a menu. Have the user store all the settings in memory instead of writing to file and vise versa. 
 DIRECTORY=~/.config/bdayrmndr/
 CONFIGP=~/.config/bdayrmndr/.bdayrmndrc #config path
 #echo "$DIRECTORY"
 #echo "$CONFIGP"
 #start the service
 #make sure to check if it's already running because we wouldn't want a fuck up would we?
+#the philosophy behind this script is that it writes to disk just in case of the event of a power failure and/or failure that causes the machine to shut down, the user still whatever precious data they have written in the file. So, after every read, the script must write to the designated file in the fastest possible time.  
 
 echo "This is bday reminder version <insert version access ability>. If you have already ran this, you dont need to do any thing. You just need to go to ~/.config/bdayrmndr/.bday and shange what you want, all this does is create the directory and sets the start up daemon."
 echo "Checking if config exists..."
@@ -97,12 +99,7 @@ echo "This next part of the initialization will ask which media files and pieces
 #add ability to change previous entries
 #make all the long read stuff into variables so that a case statement for the different variables of each section so it can easily choose without clutter down here but remember the significance of the lines that can't be redundant
 #do test to verify that variables can be used with read without any change other than the usuall dollar sign
-#variables to make things more comfy, really need to move to top if the case is going to be advanced
-#this is where the variables for below start 
-OOC="Enter your <insert variable> of choice: " #object thing of choice
-POO="Enter the path to your <insert variable>: " #path of object
-WOI="Do you wish to have the <insert variable> open in a window or in another instance? window/instance " #window orinstance
-AIO="" #After iteration option
+#fuck the one case shit is actually worse than what you have now. don't do that. It's bad. Stop thinking about that you stupid fuck
 while :
 do
 read -p "If you wish to exit the init script now type exit. What file type do you want to input? video/music/text " filetype1 </dev/tty
@@ -122,15 +119,15 @@ case $filetype1 in
 			echo "--------------VIDEO--------------" >> "$CONFIGP"
 			read -p "Enter your video player of choice: " VIDEOPL </dev/tty
 			if [[ "$VIDEOPL" == "" ]]; then
-				echo "$DEFAULTVPL" >> "$CONFIGP"
+				echo -n "$DEFAULTVPL " >> "$CONFIGP"
 				echo "Wrote the default video player, $DEFAULTVPL, to $CONFIGP as the video player."
 				
 			else
-				echo "$VIDEOPL" >> "$CONFIGP"			
+				echo -n "$VIDEOPL " >> "$CONFIGP"			
 				echo "Wrote $VIDEOPL to $CONFIGP as the video player" 
 			fi		 	
 			read -p "Enter the path to your video: " VIDEOP </dev/tty
-			echo "$VIDEOP" >> "$CONFIGP"
+			echo "'$VIDEOP'" >> "$CONFIGP"
 			echo "Wrote $VIDEOP to $CONFIGP" 			
 			read -p "Do you wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodow or in another instance means' 
 			echo "$VIDEOO" >> "$CONFIGP"			
