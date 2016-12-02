@@ -10,72 +10,6 @@
 #also make huge as fuck case statement that allows the user to see all the settings more clearly. This isn't a game. Make a menu. Have the user store all the settings in memory instead of writing to file and vise versa. 
 function datec { 
 #date change
-}
-function medias {
-#media specification
-}
-function defaultsc {
-#change the defaults
-}
-DIRECTORY=~/.config/bdayrmndr/
-CONFIGP=~/.config/bdayrmndr/.bdayrmndrc #config path
-#echo "$DIRECTORY"
-#echo "$CONFIGP"
-#start the service
-#make sure to check if it's already running because we wouldn't want a fuck up would we?
-#the philosophy behind this script is that it writes to disk just in case of the event of a power failure and/or failure that causes the machine to shut down, the user still whatever precious data they have written in the file. So, after every read, the script must write to the designated file in the fastest possible time.  
-
-echo "This is bday reminder version <insert version access ability>. If you have already ran this, you dont need to do any thing. You just need to go to ~/.config/bdayrmndr/.bday and shange what you want, all this does is create the directory and sets the start up daemon."
-echo "Checking if config exists..."
-#add possibility of capital y/n answers
-if [ -d "$DIRECTORY" ]; then
-	echo "Directory already exists. If shit broke or nothing is in there use the verify utility in this folder."
-	read -p "Do you want to use it now? y/n " line1 </dev/tty
-	case $line1 in
-		"y") echo "Calling the validation script."
-		     sh ./validation.sh
-		     echo "Exiting..."
-		     exit 1
-	             ;;
-		"n") read -p "Do you want to overwrite? If you choose 'no' this script will exit but you can trust me buddy ol' boy can't you? y/n " line12 </dev/tty
-		     case $line12 in
-			"y") echo "Going to overwrite..." #add timer
-			     rm -rv "$DIRECTORY"
-			     ;;	 
-			"n") echo "Exiting..." 	             
-			     exit 1
-			     ;;	
-		     esac	
-	esac
-	
-fi 
-echo -e "Please understand that all this does is help you understand the format of the configuration file by making examples of the things you input. If you know the config format by heart you can skip this."
-read -p "Do you want to continue? y/n " continuel </dev/tty
-#yes, i'm aware that if any other key is entered into the case it just goes onto the next sequence
-case $continuel in
-	"y") ;;
-	"n") echo "Exiting..."
-	     exit 1
-	     ;;
-esac
-echo "Initiating the creation of the configuration folder and file(s)..."
-mkdir -v "$DIRECTORY"
-echo "1. Change the date"
-echo "2. Specify media to be opened at your birthdate"
-echo "3. Go into the change defaults menu"
-echo "4. Exit"
-read -p "Enter a number that corresponds with one above: " wowmenu </dev/tty #the menu where all sorts of fun goes on
-case $wowmenu in 
-	"1") 
-	     ;; 
-	"2") 
-	     ;;
-	"3") 
-	     ;;
-	"4") exit 1
-	     ;;
-esac
-
 while :
 do
 read -p "Give your birthdate in mm/dd/yyyy format: " line2 </dev/tty
@@ -112,11 +46,14 @@ else
 	echo "Fix your month field."
 fi
 done
-touch "$CONFIGP"
-echo "Created $CONFIGP"
 #file already deleted so can write whatever, but to be safe first line should not append
+#make this go to a specified place in the file
 echo "$line2" > "$CONFIGP"
 echo -e "Wrote $line2 to $CONFIGP\n"
+}
+
+function medias {
+#media specification
 #this next section allows the user to choose the personalization of their file
 echo "This next part of the initialization will ask which media files and pieces of text will be displayed."
 #the config format will change I assure you thing who dared to venture into this pile of shit
@@ -241,3 +178,72 @@ case $filetype1 in
 		;;
 esac 
 done
+
+}
+
+function defaultsc {
+#change the defaults
+}
+
+DIRECTORY=~/.config/bdayrmndr/
+CONFIGP=~/.config/bdayrmndr/.bdayrmndrc #config path
+#echo "$DIRECTORY"
+#echo "$CONFIGP"
+#start the service
+#make sure to check if it's already running because we wouldn't want a fuck up would we?
+#the philosophy behind this script is that it writes to disk just in case of the event of a power failure and/or failure that causes the machine to shut down, the user still whatever precious data they have written in the file. So, after every read, the script must write to the designated file in the fastest possible time.  
+
+echo "This is bday reminder version <insert version access ability>. If you have already ran this, you dont need to do any thing. You just need to go to ~/.config/bdayrmndr/.bday and shange what you want, all this does is create the directory and sets the start up daemon."
+echo "Checking if config exists..."
+#add possibility of capital y/n answers
+if [ -d "$DIRECTORY" ]; then
+	echo "Directory already exists. If shit broke or nothing is in there use the verify utility in this folder."
+	read -p "Do you want to use it now? y/n " line1 </dev/tty
+	case $line1 in
+		"y") echo "Calling the validation script."
+		     sh ./validation.sh
+		     echo "Exiting..."
+		     exit 1
+	             ;;
+		"n") read -p "Do you want to overwrite? If you choose 'no' this script will exit but you can trust me buddy ol' boy can't you? y/n " line12 </dev/tty
+		     case $line12 in
+			"y") echo "Going to overwrite..." #add timer
+			     rm -rv "$DIRECTORY"
+			     ;;	 
+			"n") echo "Exiting..." 	             
+			     exit 1
+			     ;;	
+		     esac	
+	esac
+	
+fi 
+echo -e "Please understand that all this does is help you understand the format of the configuration file by making examples of the things you input. If you know the config format by heart you can skip this."
+read -p "Do you want to continue? y/n " continuel </dev/tty
+#yes, i'm aware that if any other key is entered into the case it just goes onto the next sequence
+case $continuel in
+	"y") ;;
+	"n") echo "Exiting..."
+	     exit 1
+	     ;;
+esac
+echo "Initiating the creation of the configuration folder and file(s)..."
+mkdir -v "$DIRECTORY"
+touch "$CONFIGP"
+echo "Created $CONFIGP"
+
+echo "1. Change the date"
+echo "2. Specify media to be opened at your birthdate"
+echo "3. Go into the change defaults menu"
+echo "4. Exit"
+read -p "Enter a number that corresponds with one above: " wowmenu </dev/tty #the menu where all sorts of fun goes on
+case $wowmenu in 
+	"1") datec
+	     ;; 
+	"2") medias
+	     ;;
+	"3") defaultc
+	     ;;
+	"4") exit 1
+	     ;;
+esac
+
