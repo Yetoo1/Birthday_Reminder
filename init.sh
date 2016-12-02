@@ -8,6 +8,15 @@
 #in the event of the requirement of the calling of terminal, make a function or some shit that checks what terminal the user uses. If in the event that there is a different terminal than the ones supported, this script has got to say something
 #also speaking of functions, make some functions and shit to clean this thing up
 #also make huge as fuck case statement that allows the user to see all the settings more clearly. This isn't a game. Make a menu. Have the user store all the settings in memory instead of writing to file and vise versa. 
+function datec { 
+#date change
+}
+function medias {
+#media specification
+}
+function defaultsc {
+#change the defaults
+}
 DIRECTORY=~/.config/bdayrmndr/
 CONFIGP=~/.config/bdayrmndr/.bdayrmndrc #config path
 #echo "$DIRECTORY"
@@ -51,6 +60,22 @@ case $continuel in
 esac
 echo "Initiating the creation of the configuration folder and file(s)..."
 mkdir -v "$DIRECTORY"
+echo "1. Change the date"
+echo "2. Specify media to be opened at your birthdate"
+echo "3. Go into the change defaults menu"
+echo "4. Exit"
+read -p "Enter a number that corresponds with one above: " wowmenu </dev/tty #the menu where all sorts of fun goes on
+case $wowmenu in 
+	"1") 
+	     ;; 
+	"2") 
+	     ;;
+	"3") 
+	     ;;
+	"4") exit 1
+	     ;;
+esac
+
 while :
 do
 read -p "Give your birthdate in mm/dd/yyyy format: " line2 </dev/tty
@@ -129,7 +154,7 @@ case $filetype1 in
 			read -p "Enter the path to your video: " VIDEOP </dev/tty
 			echo "'$VIDEOP'" >> "$CONFIGP"
 			echo "Wrote $VIDEOP to $CONFIGP" 			
-			read -p "Do you wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodow or in another instance means' 
+			read -p "Do you wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodow or in another instance means. Also note that this really should go above the video path and maybe fore for the command line option to open in other terminals/windows 
 			echo "$VIDEOO" >> "$CONFIGP"			
 			echo "Wrote $VIDEOO to $CONFIGP as the method of opening $VIDEOPL" #don't get confused here, $VIDEOPL is entered first, DEFAULTPL is already set, it doesn't matter, the change stays 			
 			read -p "Do you wish to choose another video or choose another type of media/text? video/media-text " videoc </dev/tty  		 	
