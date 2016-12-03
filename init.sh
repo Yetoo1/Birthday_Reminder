@@ -64,7 +64,7 @@ echo "This next part of the initialization will ask which media files and pieces
 #fuck the one case shit is actually worse than what you have now. don't do that. It's bad. Stop thinking about that you stupid fuck
 while :
 do
-read -p "If you wish to exit the init script now type exit. What file type do you want to input? video/music/text " filetype1 </dev/tty
+read -p "What file type do you want to input? video/music/text . If you wish to go back to the menu screen, type 'back'. If you wish to exit the init script now type 'exit'. " filetype1 </dev/tty
 case $filetype1 in
 	#c=1 failed test, original position as opposed to the one above
 	"video") echo "This package ships with mpv <insert version> so by default, if you don't type in the command for a video player, the script will use mpv to play your video."
@@ -176,6 +176,8 @@ case $filetype1 in
 	"exit") echo "Exiting the init script..." #add some verification or some shit to make this line more powerful and worth not just putting 'Exiting...'
 		exit 1
 		;;
+	"back") break 
+		 ;;
 esac 
 done
 
@@ -183,6 +185,7 @@ done
 
 function defaultsc {
 #change the defaults
+break
 }
 
 DIRECTORY=~/.config/bdayrmndr/
@@ -231,10 +234,9 @@ mkdir -v "$DIRECTORY"
 touch "$CONFIGP"
 echo "Created $CONFIGP"
 
-echo "1. Change the date"
-echo "2. Specify media to be opened at your birthdate"
-echo "3. Go into the change defaults menu"
-echo "4. Exit"
+while :
+do
+echo -e "1. Change the date\n2. Specify media to be opened at your birthdate\n3. Go into the modification of defaults menu\n4. Exit\n"
 read -p "Enter a number that corresponds with one above: " wowmenu </dev/tty #the menu where all sorts of fun goes on
 case $wowmenu in 
 	"1") datec
@@ -246,4 +248,4 @@ case $wowmenu in
 	"4") exit 1
 	     ;;
 esac
-
+done
