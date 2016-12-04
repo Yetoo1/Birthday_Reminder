@@ -81,15 +81,16 @@ case $filetype1 in
 			echo "--------------VIDEO--------------" >> "$CONFIGP"
 			read -p "Enter your video player of choice: " VIDEOPL </dev/tty
 			if [[ "$VIDEOPL" == "" ]]; then
-				echo -n "$DEFAULTVPL " >> "$CONFIGP"
+				echo -n "$DEFAULTVPL" >> "$CONFIGP"
 				echo "Wrote the default video player, $DEFAULTVPL, to $CONFIGP as the video player."
 				
-			else
-				echo -n "$VIDEOPL " >> "$CONFIGP"			
+			else				
+				echo -n "$VIDEOPL" >> "$CONFIGP"			
 				echo "Wrote $VIDEOPL to $CONFIGP as the video player" 
 			fi		 	
 			read -p "Enter the path to your video: " VIDEOP </dev/tty
-			echo "'$VIDEOP'" >> "$CONFIGP"
+			#notice the space			
+			echo " '$VIDEOP'" >> "$CONFIGP"
 			echo "Wrote $VIDEOP to $CONFIGP" 			
 			read -p "Do you wish to have the video open in a window or in another instance? window/instance " VIDEOO </dev/tty #clarify what the fuck 'in a winodow or in another instance means. Also note that this really should go above the video path and maybe fore for the command line option to open in other terminals/windows 
 			echo "$VIDEOO" >> "$CONFIGP"			
@@ -233,6 +234,13 @@ echo "Initiating the creation of the configuration folder and file(s)..."
 mkdir -v "$DIRECTORY"
 touch "$CONFIGP"
 echo "Created $CONFIGP"
+#you can see what i tried to do
+#dated=$(sed -i "1i\--------------DATE--------------")
+#echo sed -i "1i\--------------DATE--------------" "$CONFIGP"
+#on line 1
+echo "--------------DATE--------------"
+#on line 3
+echo "--------------DATE_END--------------"
 
 while :
 do
