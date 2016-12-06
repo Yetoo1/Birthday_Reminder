@@ -193,6 +193,7 @@ DIRECTORY=~/.config/bdayrmndr/
 CONFIGP=~/.config/bdayrmndr/.bdayrmndrc #config path
 #echo "$DIRECTORY"
 #echo "$CONFIGP"
+
 #start the service
 #make sure to check if it's already running because we wouldn't want a fuck up would we?
 #the philosophy behind this script is that it writes to disk just in case of the event of a power failure and/or failure that causes the machine to shut down, the user still whatever precious data they have written in the file. So, after every read, the script must write to the designated file in the fastest possible time.  
@@ -238,9 +239,10 @@ echo "Created $CONFIGP"
 #dated=$(sed -i "1i\--------------DATE--------------")
 #echo sed -i "1i\--------------DATE--------------" "$CONFIGP"
 #on line 1
-echo "--------------DATE--------------"
+echo "--------------DATE--------------" >> "$CONFIGP"
+echo "69-69-6969" >> "$CONFIGP" #sed -i '/69-69-6969/c\22' "$CONFIGP"
 #on line 3
-echo "--------------DATE_END--------------"
+echo "--------------DATE_END--------------" >> "$CONFIGP" 
 
 while :
 do
