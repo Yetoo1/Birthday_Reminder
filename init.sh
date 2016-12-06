@@ -240,7 +240,7 @@ echo "Created $CONFIGP"
 #echo sed -i "1i\--------------DATE--------------" "$CONFIGP"
 #on line 1
 echo "--------------DATE--------------" >> "$CONFIGP"
-echo "69-69-6969" >> "$CONFIGP" #sed -i '/69-69-6969/c\22' "$CONFIGP"
+echo "69-69-6969" >> "$CONFIGP" #sed -i '/69-69-6969/c\22' "$CONFIGP" NO THIS WILL NOT FUCKING WORK. IT DOESN'T FUCKING ACCOUNT FOR FUTURE SHIT
 #on line 3
 echo "--------------DATE_END--------------" >> "$CONFIGP" 
 
