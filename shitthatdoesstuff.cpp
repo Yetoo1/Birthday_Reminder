@@ -84,9 +84,14 @@ else std::cout << "You can't see shit\n";
 //system("cat ~/.config/bdayrmndr/.bdayrmndrc");
 FILE *fp = popen("cat ~/.config/bdayrmndr/.bdayrmndrc", "r");
 char buf [1024];
+int i = 0;
 
 while (fgets(buf, 1024, fp)) {
-std::cout<<buf;
+	if (buf[i] == "22-22-2222")
+	{
+		std::cout << "holy shit\n";
+	}
+	i++;
 }
 
 fclose(fp);
