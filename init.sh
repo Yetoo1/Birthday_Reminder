@@ -21,9 +21,9 @@ read -p "Give your birthdate in mm-dd-yyyy format: " line2 </dev/tty
 #echo ${#line2}
 #no need to check for dashes because if there is a discrepancy, the if loop will take care of it
 #holy fuck, this change worked on the first try
-mm=$(echo $line2| cut -d'-' -f 1)
-tt=$(echo $line2| cut -d'-' -f 2)
-yyyy=$(echo $line2| sed 's/.*-//')
+mm=$(echo $line2| cut -d'-' -f 1) #cuts the string so only month to check
+tt=$(echo $line2| cut -d'-' -f 2) #cuts the string so only day to check
+yyyy=$(echo $line2| sed 's/.*-//') #cuts the string so only year to check
 
 #re='^[0-9]+$'
 #echo "$mm"
