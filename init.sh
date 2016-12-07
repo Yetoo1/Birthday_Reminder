@@ -2,6 +2,11 @@
 #The license to this is that if you copy it, fuck you, you know what, since you want my beautifully crafted work so bad why don't you write your name before and after each command and word 5 times in comment form. No screw "why don't you", YOU MUST!
 #Author: Yetoo Happy
 #Contact: yetoohappy@gmail.com
+#by default, if nothing is found by the program then it will set 11-22-2000 and it will display "Happy birthday, faggot." into the config.
+#if the program finds a date but nothing else then it will put the output the text (add the setting to just out put text) "Happy birthday, faggot.", which can be found in the config.
+
+#note that if the date is not the first one to be picked, whatever is going to be in its place will be overwritten, need to make a check to see if text exists, if the text does exist then something will find the end of the text, add three lines, then sed those lines as it got the location of such lines   
+    
 #Yeah I could have the verify utility in here but this is the init shell script, not the verify shell script.
 #Also, the idea behind this script is that it helps the user have a guidline on what to input into the config. After the init is done, it is encouraged to manually edit the file with all their will, joy, and effort.
 #change all the y/n cases to if statements 
@@ -13,12 +18,14 @@ function datec {
 #date change
 while :
 do
-read -p "Give your birthdate in mm/dd/yyyy format: " line2 </dev/tty
+read -p "Give your birthdate in mm-dd-yyyy format: " line2 </dev/tty
 #echo ${#line2}
-#no need to check for slashes because if there is a discrepancy, the if loop will take care of it
-mm=$(echo $line2| cut -d'/' -f 1)
-tt=$(echo $line2| cut -d'/' -f 2)
-yyyy=$(echo $line2| sed 's/.*\///')
+#no need to check for dashes because if there is a discrepancy, the if loop will take care of it
+#holy fuck, this change worked on the first try
+mm=$(echo $line2| cut -d'-' -f 1) #cuts the string so only month to check
+tt=$(echo $line2| cut -d'-' -f 2) #cuts the string so only day to check
+yyyy=$(echo $line2| sed 's/.*-//') #cuts the string so only year to check
+
 #re='^[0-9]+$'
 #echo "$mm"
 #echo "$tt"
@@ -48,9 +55,18 @@ else
 fi
 done
 #file already deleted so can write whatever, but to be safe first line should not append
-#make this go to a specified place in the file
-echo "$line2" > "$CONFIGP"
-echo -e "Wrote $line2 to $CONFIGP\n"
+#this is needed for the possibility of changing the date value. If this didn't exist then, when you wanted to change the date and assuming that there would be echos instead of seds to the file, then it wouldn't overwrite the first one and instead create a second one somewhere abituarily in the file and we don't want that because that's bad doo doo.  
+
+#file line length variable
+#LINEL=$(wc -l $CONFIGP | grep -o "[0-9]\+")
+#echo "$LINEL" 
+#the reason for no checking if there is something already where this is going to input is because the three spaces are inputted at the beginning and everything else is appended. So by that logic, and knowing this is the only thing that isn't appending, it is overwriting, that means that this will always stay at the top. I actually spent the time trying to make a if statement for this. Waste of my fucking time seriously.
+	sed -i "1s/.*/--------------DATE--------------/" "$CONFIGP"
+	#this next line would work except that sed is such a pussy and doesn't except slashes in variables, fix this
+	sed -i "2s/.*/$line2/" "$CONFIGP"
+	sed -i "3s/.*/--------------DATE_END--------------/" "$CONFIGP" 
+	#echo "$line2" > "$CONFIGP"
+	echo -e "Wrote $line2 to $CONFIGP\n"
 }
 
 function medias {
@@ -63,6 +79,8 @@ echo "This next part of the initialization will ask which media files and pieces
 #make all the long read stuff into variables so that a case statement for the different variables of each section so it can easily choose without clutter down here but remember the significance of the lines that can't be redundant
 #do test to verify that variables can be used with read without any change other than the usuall dollar sign
 #fuck the one case shit is actually worse than what you have now. don't do that. It's bad. Stop thinking about that you stupid fuck
+#remember 'until' loops and thier significance
+#move the 'instance/window' option to the top, so that every thing else can append to it.  
 while :
 do
 read -p "What file type do you want to input? video/music/text . If you wish to go back to the menu screen, type 'back'. If you wish to exit the init script now type 'exit'. " filetype1 </dev/tty
@@ -236,19 +254,15 @@ echo "Initiating the creation of the configuration folder and file(s)..."
 mkdir -v "$DIRECTORY"
 touch "$CONFIGP"
 echo "Created $CONFIGP"
-#you can see what i tried to do
-#dated=$(sed -i "1i\--------------DATE--------------")
-#echo sed -i "1i\--------------DATE--------------" "$CONFIGP"
-#on line 1
-echo "--------------DATE--------------" >> "$CONFIGP"
-echo "69-69-6969" >> "$CONFIGP" #sed -i '/69-69-6969/c\22' "$CONFIGP"
-#on line 3
-echo "--------------DATE_END--------------" >> "$CONFIGP" 
-
+echo " " >> "$CONFIGP"
+echo " " >> "$CONFIGP"
+echo " " >> "$CONFIGP"
 while :
 do
 echo -e "1. Change the date\n2. Specify media to be opened at your birthdate\n3. Go into the modification of defaults menu\n4. Exit\n"
 read -p "Enter a number that corresponds with one above: " wowmenu </dev/tty #the menu where all sorts of fun goes on
+#make option to view contents of file
+#possibly make this an until loop if possible to check before leaving and look nice in the text editor, the one you are reading this in right now.
 case $wowmenu in 
 	"1") datec
 	     ;; 
@@ -256,7 +270,8 @@ case $wowmenu in
 	     ;;
 	"3") defaultc
 	     ;;
-	"4") exit 1
+	"4") #have it check if at least 
+	     exit 1
 	     ;;
 esac
 done
