@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
@@ -59,3 +60,36 @@ int main (int argc, char*argv[])
 	else std::cout << "Unable to open file\n";
 	return 0;
 }
+*/
+#include <iostream>
+#include <fstream>
+#include <unistd.h>
+#include <cstdlib> //if in the case of using system
+int main (int argc, char* argv)
+{
+/*
+std::string line;
+std::ifstream config ("~
+/Documents/Birthday_Reminder/validation.sh");
+if (config.is_open())
+{
+	while (getline (config, line))
+	{
+		std::cout << line << "\n";
+	}
+	config.close();
+}
+else std::cout << "You can't see shit\n";
+*/
+//system("cat ~/.config/bdayrmndr/.bdayrmndrc");
+FILE *fp = popen("cat ~/.config/bdayrmndr/.bdayrmndrc", "r");
+char buf [1024];
+
+while (fgets(buf, 1024, fp)) {
+std::cout<<buf;
+}
+
+fclose(fp);
+return 0;
+}
+
