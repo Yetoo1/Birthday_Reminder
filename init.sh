@@ -48,7 +48,11 @@ fi
 done
 #file already deleted so can write whatever, but to be safe first line should not append
 #make this go to a specified place in the file
-echo "$line2" > "$CONFIGP"
+sed -i "1s/.*/--------------DATE--------------/" "$CONFIGP"
+#this next line would work except that sed is such a pussy and doesn't except slashes in variables, fix this
+sed -i "2s/.*/$line2/" "$CONFIGP"
+sed -i "3s/.*/--------------DATE_END--------------/" "$CONFIGP" 
+#echo "$line2" > "$CONFIGP"
 echo -e "Wrote $line2 to $CONFIGP\n"
 }
 
@@ -239,11 +243,14 @@ echo "Created $CONFIGP"
 #dated=$(sed -i "1i\--------------DATE--------------")
 #echo sed -i "1i\--------------DATE--------------" "$CONFIGP"
 #on line 1
-echo "--------------DATE--------------" >> "$CONFIGP"
-echo "69-69-6969" >> "$CONFIGP" #sed -i '/69-69-6969/c\22' "$CONFIGP" NO THIS WILL NOT FUCKING WORK. IT DOESN'T FUCKING ACCOUNT FOR FUTURE SHIT
+#echo "--------------DATE--------------" >> "$CONFIGP"
+#echo "69-69-6969" >> "$CONFIGP" #this is a mere placeholder so when sed replaces the line, it can actually replace the line
+#sed -i '2s/.*/replacedhasbeenreplaced/' test.txt this should work
 #on line 3
-echo "--------------DATE_END--------------" >> "$CONFIGP" 
-
+#echo "--------------DATE_END--------------" >> "$CONFIGP" 
+echo " " >> "$CONFIGP"
+echo " " >> "$CONFIGP"
+echo " " >> "$CONFIGP"
 while :
 do
 echo -e "1. Change the date\n2. Specify media to be opened at your birthdate\n3. Go into the modification of defaults menu\n4. Exit\n"
