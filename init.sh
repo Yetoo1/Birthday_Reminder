@@ -8,6 +8,7 @@
 #in the event of the requirement of the calling of terminal, make a function or some shit that checks what terminal the user uses. If in the event that there is a different terminal than the ones supported, this script has got to say something
 #also speaking of functions, make some functions and shit to clean this thing up
 #also make huge as fuck case statement that allows the user to see all the settings more clearly. This isn't a game. Make a menu. Have the user store all the settings in memory instead of writing to file and vise versa. 
+#MAKE IT SO THAT WHEN THE SERVICE OF THE MAIN PROGRAM GETS TO THE POINT OF INITIALIZLIZATION, KILL THE SERVICE AND REMOVE THE OLD SERVICE IN START UP 
 function datec { 
 #date change
 while :
