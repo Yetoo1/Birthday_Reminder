@@ -78,6 +78,8 @@ echo "This next part of the initialization will ask which media files and pieces
 #make all the long read stuff into variables so that a case statement for the different variables of each section so it can easily choose without clutter down here but remember the significance of the lines that can't be redundant
 #do test to verify that variables can be used with read without any change other than the usuall dollar sign
 #fuck the one case shit is actually worse than what you have now. don't do that. It's bad. Stop thinking about that you stupid fuck
+#remember 'until' loops and thier significance
+#move the 'instance/window' option to the top, so that every thing else can append to it.  
 while :
 do
 read -p "What file type do you want to input? video/music/text . If you wish to go back to the menu screen, type 'back'. If you wish to exit the init script now type 'exit'. " filetype1 </dev/tty
@@ -259,6 +261,7 @@ do
 echo -e "1. Change the date\n2. Specify media to be opened at your birthdate\n3. Go into the modification of defaults menu\n4. Exit\n"
 read -p "Enter a number that corresponds with one above: " wowmenu </dev/tty #the menu where all sorts of fun goes on
 #make option to view contents of file
+#possibly make this an until loop if possible to check before leaving and look nice in the text editor, the one you are reading this in right now.
 case $wowmenu in 
 	"1") datec
 	     ;; 
